@@ -1,0 +1,60 @@
+public class RemoveDuplicates {
+    public static List<List<Integer>> combinationSum2(int[] candidates, int target) {
+    List<List<Integer>> res = new ArrayList<>();
+    Arrays.sort(candidates);
+    combinationSum2(candidates, target, res, new ArrayList<>(), 0);
+
+    return res;
+}
+
+public static void combinationSum2(int[] candidates, int target, List<List<Integer>> res, List<Integer> values, int idx) {
+    if (target < 0) {
+        return;
+    }
+
+    if (target == 0) {
+        res.add(new ArrayList<>(values));
+        return;
+    }
+
+    for (int i = idx; i < candidates.length; ++i) {
+        if (idx != i && candidates[i] == candidates[i - 1]) {
+            continue;
+        }
+
+        values.add(candidates[i]);
+        combinationSum2(candidates, target - candidates[i], res, values, i + 1);
+        values.remove(values.size() - 1);
+    }
+}
+public static void main(String[] args)
+    {
+        ArrayList<Integer> arr = new ArrayList<>();
+        Scanner s=new Scanner(System.in);
+        int n=s.nextInt();
+        for(int i=0;i<n;i++)
+        arr.add(s.nextInt());
+       
+        int sum = s.nextInt();
+ 
+        ArrayList<ArrayList<Integer> > ans
+            = combinationSum2(arr, sum);
+ 
+        // If result is empty, then
+        if (ans.size() == 0) {
+            System.out.println("Empty");
+            return;
+        }
+ 
+        // print all combinations stored in ans
+ 
+        for (int i = 0; i < ans.size(); i++) {
+ 
+            System.out.print("(");
+            for (int j = 0; j < ans.get(i).size(); j++) {
+                System.out.print(ans.get(i).get(j) + " ");
+            }
+            System.out.print(") ");
+        }
+    }
+}
